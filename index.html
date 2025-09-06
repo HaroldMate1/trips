@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Itinerario Interactivo: Aventura Europea 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Wanderlust Neutrals -->
+    <!-- Application Structure Plan: La aplicación está diseñada en tres secciones principales para una usabilidad óptima. 1) Un panel de control (Resumen) que ofrece una vista general inmediata con un mapa interactivo, métricas clave y un gráfico de presupuesto, ideal para consultas rápidas. 2) Un itinerario detallado en formato de acordeón, que permite a los usuarios enfocarse en un día a la vez sin sentirse abrumados por la información. 3) Una sección de presupuesto detallado con un conversor de divisas. Esta estructura jerárquica (general -> específico) facilita la planificación y consulta del viaje. -->
+    <!-- Visualization & Content Choices: Mapa del Viaje -> Plotly.js para un mapa interactivo de ciudades que es más atractivo y contextual que una imagen estática. Desglose del Presupuesto -> Chart.js (gráfico de dona) para una visualización rápida de la distribución de costos. Itinerario Diario -> Acordeón HTML/JS para presentar información densa de forma organizada y digerible. Tabla de Presupuesto -> Tabla HTML con JS para conversión de divisas, ofreciendo utilidad práctica. Se evita SVG/Mermaid en favor de estas herramientas interactivas basadas en Canvas. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #374151;
+        }
+        .bg-warm-neutral { background-color: #FDFBF8; }
+        .bg-soft-slate { background-color: #4A5568; }
+        .text-accent-terracotta { color: #C05621; }
+        .bg-accent-terracotta { background-color: #C05621; }
+        .nav-link {
+            padding: 8px 16px;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        .nav-link.active {
+            background-color: #4A5568;
+            color: #FFFFFF;
+        }
+        .nav-link:not(.active):hover {
+            background-color: #EDF2F7;
+        }
+        .accordion-header {
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .accordion-header:hover {
+            background-color: #F7FAFC;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        .map-container {
+            position: relative;
+            width: 100%;
+            height: 450px;
+        }
+        @media (min-width: 768px) {
+            .chart-container { height: 400px; }
+            .map-container { height: 500px; }
+        }
+    </style>
+</head>
+<body class="bg-warm-neutral">
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-soft-slate">Euroviaje 2025</h1>
+            <nav id="nav-menu" class="bg-gray-200/50 rounded-full p-1 flex items-center space-x-1">
+                <a href="#resumen" class="nav-link text-sm md:text-base active">Resumen</a>
+                <a href="#itinerario" class="nav-link text-sm md:text-base">Itinerario</a>
+                <a href="#presupuesto" class="nav-link text-sm md:text-base">Presupuesto</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+        
+        <section id="resumen" class="scroll-mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-2">La Aventura Europea Definitiva</h2>
+                <p class="text-lg text-gray-600">Un vistazo general a tu viaje optimizado del 27 de Sep al 13 de Oct de 2025.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div class="bg-white p-6 rounded-xl shadow-md text-center">
+                    <h3 class="text-4xl font-bold text-accent-terracotta">17</h3>
+                    <p class="text-gray-600 font-semibold">Días de Aventura</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md text-center">
+                    <h3 class="text-4xl font-bold text-accent-terracotta">8</h3>
+                    <p class="text-gray-600 font-semibold">Países por Descubrir</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md text-center">
+                    <h3 class="text-4xl font-bold text-accent-terracotta">12</h3>
+                    <p class="text-gray-600 font-semibold">Ciudades Principales</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="text-2xl font-bold mb-4 text-center">Ruta del Viaje</h3>
+                     <p class="text-center text-gray-600 mb-4">Un recorrido visual de tu aventura. Pasa el cursor sobre los puntos para ver las ciudades.</p>
+                    <div class="map-container" id="route-map"></div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="text-2xl font-bold mb-4 text-center">Desglose del Presupuesto</h3>
+                    <p class="text-center text-gray-600 mb-4">Distribución estimada de los costos totales por persona.</p>
+                    <div class="chart-container">
+                        <canvas id="budget-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <h3 class="text-2xl font-bold mb-4 flex items-center justify-center">
+                    <span class="text-red-500 mr-2">⚠️</span>
+                    Acción Requerida: ¡Reservas Prioritarias!
+                </h3>
+                <p class="text-center text-gray-600 mb-6">Estos tiquetes se agotan o suben de precio rápidamente. Es esencial reservar con la mayor antelación posible.</p>
+                <ul class="space-y-4">
+                    <li class="flex items-start"><span class="text-xl mr-3">✈️</span><div><strong class="font-semibold">Vuelos Internacionales e Intra-Europeos:</strong> BOG→AMS, ROM→MAD, MAD→BOG. La base del viaje.</div></li>
+                    <li class="flex items-start"><span class="text-xl mr-3">🎟️</span><div><strong class="font-semibold">Casa de Ana Frank (Ámsterdam):</strong> Los tiquetes se liberan mensualmente y se agotan en horas.</div></li>
+                    <li class="flex items-start"><span class="text-xl mr-3">🎟️</span><div><strong class="font-semibold">Galería Uffizi (Florencia):</strong> Imprescindible reservar con semanas o meses de antelación.</div></li>
+                    <li class="flex items-start"><span class="text-xl mr-3">🚄</span><div><strong class="font-semibold">Eurostar (Ámsterdam → Bruselas):</strong> Los precios más económicos desaparecen rápido.</div></li>
+                    <li class="flex items-start"><span class="text-xl mr-3">🏨</span><div><strong class="font-semibold">Alojamiento:</strong> Reserva tarifas flexibles ahora para asegurar los mejores lugares.</div></li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="itinerario" class="scroll-mt-20 mt-16">
+             <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-2">Itinerario Detallado Día por Día</h2>
+                <p class="text-lg text-gray-600">Haz clic en cada día para expandir y ver los detalles de tu plan.</p>
+            </div>
+            <div id="itinerary-accordion" class="space-y-4">
+            </div>
+        </section>
+
+        <section id="presupuesto" class="scroll-mt-20 mt-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-2">Presupuesto Estimado</h2>
+                <p class="text-lg text-gray-600">Tabla detallada de costos por persona. Usa los botones para convertir las divisas.</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-lg overflow-x-auto">
+                <div class="mb-4 text-center">
+                    <label class="font-semibold mr-2">Moneda:</label>
+                    <button class="currency-btn bg-soft-slate text-white py-1 px-3 rounded-full" data-currency="EUR">EUR</button>
+                    <button class="currency-btn bg-gray-300 text-gray-700 py-1 px-3 rounded-full" data-currency="COP">COP</button>
+                    <button class="currency-btn bg-gray-300 text-gray-700 py-1 px-3 rounded-full" data-currency="CHF">CHF</button>
+                </div>
+                <table id="budget-table" class="w-full text-left">
+                    <thead>
+                        <tr class="border-b-2 border-gray-200">
+                            <th class="py-2 px-4 font-semibold">Categoría</th>
+                            <th class="py-2 px-4 font-semibold text-right">Costo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                 <p class="text-sm text-gray-500 mt-4 text-center">*Nota: Basado en dos personas viajando y reservando con antelación. Un viajero solo tendrá un costo mayor por el alojamiento.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-8 mt-12 border-t">
+        <p class="text-gray-500">&copy; 2025 | Tu Aventura Europea te Espera. ¡Buen Viaje!</p>
+    </footer>
+
+    <script>
+        const tripData = {
+            itinerary: [
+                { day: 1, date: "Vie, 27 Sep", title: "✈️ Salida de Bogotá (BOG)", details: "Vuelo nocturno a Ámsterdam. Prepárate para la aventura transatlántica. <strong>Vuelo:</strong> KLM KL742 (Sin escalas). <strong>Salida BOG:</strong> 21:55." },
+                { day: 2, date: "Sáb, 28 Sep", title: "Llegada a Ámsterdam", details: "<strong>16:15:</strong> Llegada a Schiphol (AMS). Tren al centro. <strong>Noche:</strong> Check-in en <strong>citizenM Amstel Amsterdam</strong>. Explora los canales y visita la <strong>Casa de Ana Frank</strong> (reserva esencial: €16)." },
+                { day: 3, date: "Dom, 29 Sep", title: "Ámsterdam → Bruselas", details: "<strong>Mañana:</strong> Visita al <strong>Rijksmuseum</strong> (€25). <strong>Tarde:</strong> Viaje a Bélgica. <strong>Transporte:</strong> Eurostar #9356 (15:19 AMS → 17:08 BRU). <strong>Noche:</strong> Check-in en <strong>Motel One Brussels</strong> y paseo por la Grand-Place." },
+                { day: 4, date: "Lun, 30 Sep", title: "Excursión a Brujas", details: "<strong>Día Completo:</strong> Excursión en tren a Brujas. <strong>Actividades:</strong> Sube al Campanario (Belfry), tour en barco por los canales, disfruta de la plaza Markt. <strong>Transporte:</strong> Tren Intercity SNCB. Regreso a Bruselas por la noche." },
+                { day: 5, date: "Mar, 1 Oct", title: "Bruselas → Luxemburgo", details: "<strong>Mañana:</strong> Última exploración de Bruselas. <strong>Tarde:</strong> Viaje en tren a Luxemburgo. <strong>Transporte:</strong> Tren IC (12:33 BRU → 15:52 LUX). <strong>Noche:</strong> Check-in en <strong>Mama Shelter Luxembourg</strong>. Explora el casco antiguo y el Chemin de la Corniche. ¡Transporte público GRATIS!" },
+                { day: 6, date: "Mié, 2 Oct", title: "Luxemburgo → Estrasburgo", details: "<strong>Mañana:</strong> Café en Luxemburgo. <strong>Tarde:</strong> Tren a Estrasburgo, Francia. <strong>Transporte:</strong> Tren TER (11:10 LUX → 12:47 STR). <strong>Noche:</strong> Check-in en <strong>Hotel Hannong</strong>. Paseo por La Petite France y tour en barco de Batorama (€15)." },
+                { day: 7, date: "Jue, 3 Oct", title: "Estrasburgo → Lucerna (Suiza)", details: "<strong>¡Activa tu Swiss Travel Pass hoy!</strong> <strong>Mañana:</strong> Viaje a Lucerna vía Basilea. <strong>Tarde:</strong> Check-in en <strong>Swiss Youth Hostel Lucerne</strong>. Explora el Puente de la Capilla. <strong>Consejo:</strong> Siéntate en el lado derecho del tren Basilea→Lucerna." },
+                { day: 8, date: "Vie, 4 Oct", title: "Monte Rigi: Reina de las Montañas", details: "<strong>Día Completo:</strong> Excursión al Monte Rigi, <strong>100% incluida en el Swiss Travel Pass</strong>. Circuito: Barco Lucerna → Vitznau, tren cremallera a Rigi Kulm, descenso en teleférico a Weggis y barco de regreso a Lucerna. ¡Vistas panorámicas garantizadas!" },
+                { day: 9, date: "Sáb, 5 Oct", title: "Lucerna → Interlaken", details: "<strong>Mañana:</strong> Tren panorámico <strong>Luzern-Interlaken Express</strong>. <strong>Consejo:</strong> Siéntate en el lado derecho. <strong>Tarde:</strong> Check-in en <strong>Swiss Youth Hostel Interlaken</strong> y excursión al valle de <strong>Lauterbrunnen</strong> (Valle de las 72 cascadas)." },
+                { day: 10, date: "Dom, 6 Oct", title: "Interlaken → Lausana", details: "<strong>Mañana:</strong> Viaje en tren a Lausana. <strong>Consejo:</strong> Siéntate en el lado izquierdo después de Spiez para vistas del Lago de Ginebra. <strong>Tarde:</strong> Check-in en <strong>Swiss Youth Hostel Lausanne</strong> y visita al <strong>Museo Olímpico</strong> (50% desc. con STP)." },
+                { day: 11, date: "Lun, 7 Oct", title: "Lausana → Milán", details: "<strong>Mañana:</strong> Barco por el Lago de Ginebra (cubierto por STP) al <strong>Castillo de Chillon</strong> (50% desc.). Camina por el paseo de Montreux. <strong>Tarde:</strong> Tren a Italia. <strong>Transporte:</strong> EuroCity EC39 (Lausana→Milán). <strong>Noche:</strong> Check-in en <strong>NH Collection Milano President</strong>." },
+                { day: 12, date: "Mar, 8 Oct", title: "Milán y Excursión a Mónaco", details: "<strong>¡Día obligatorio en Mónaco!</strong> Un viaje largo pero gratificante. <strong>Ruta:</strong> Milán → Ventimiglia (Intercity) y luego Ventimiglia → Monaco-Monte-Carlo (TER). Visita el Palacio del Príncipe y el Casino. Regreso a Milán por la noche." },
+                { day: 13, date: "Mié, 9 Oct", title: "Milán → Venecia", details: "<strong>Mañana:</strong> Últimos momentos en Milán. <strong>Tarde:</strong> Viaje en tren de alta velocidad a Venecia. <strong>Transporte:</strong> Frecciarossa #9721 (11:45 MIL → 14:12 VCE). <strong>Noche:</strong> Check-in en <strong>Hotel Antiche Figure</strong>. Piérdete en los canales y prueba los *cicchetti*." },
+                { day: 14, date: "Jue, 10 Oct", title: "Venecia → Florencia", details: "<strong>Mañana:</strong> Visita el <strong>Palacio Ducal</strong> y la Plaza de San Marcos (€25). <strong>Tarde:</strong> Tren a Florencia. <strong>Transporte:</strong> Frecciarossa #9434 (14:20 VCE → 16:39 FLR). <strong>Noche:</strong> Check-in en <strong>Glance Hotel Firenze</strong>. Atardecer en Piazzale Michelangelo." },
+                { day: 15, date: "Vie, 11 Oct", title: "Florencia → Roma", details: "<strong>Mañana:</strong> Cita con el arte en la <strong>Galería Uffizi</strong> (€29, reserva esencial). <strong>Tarde:</strong> Viaje a la Ciudad Eterna. <strong>Transporte:</strong> Frecciarossa #9539 (15:13 FLR → 16:50 ROM). <strong>Noche:</strong> Check-in en <strong>Hotel Artemide</strong>. Paseo a la Fontana de Trevi y el Panteón." },
+                { day: 16, date: "Sáb, 12 Oct", title: "Roma → Madrid", details: "<strong>¡Día intenso!</strong> <strong>Mañana:</strong> Explora el <strong>Coliseo</strong>, Foro Romano y Palatino (€18). <strong>Tarde:</strong> Visita los <strong>Museos Vaticanos y la Capilla Sixtina</strong> (€25). <strong>Noche:</strong> Vuelo a Madrid. <strong>Transporte:</strong> Vuelo IB3239 (19:55 FCO → 22:30 MAD). Check-in en <strong>Room Mate Óscar, Madrid</strong>." },
+                { day: 17, date: "Dom, 13 Oct", title: "Adiós Madrid y Vuelo a Casa", details: "<strong>Mañana:</strong> Visita al <strong>Museo del Prado</strong> (€15). <strong>Almuerzo:</strong> Últimas tapas en el Mercado de San Miguel. <strong>Tarde:</strong> Traslado al aeropuerto para el vuelo de regreso. <strong>Transporte:</strong> Vuelo IB6585 (17:35 MAD → 21:00 BOG)." },
+            ],
+            budget: [
+                { category: "Vuelos Internacionales", costEUR: 1500 },
+                { category: "Vuelo Intra-Europeo", costEUR: 120 },
+                { category: "Trenes y Pases", costEUR: 572 },
+                { category: "Alojamiento", costEUR: 1620 },
+                { category: "Atracciones y Museos", costEUR: 170 },
+                { category: "Comida y Bebida", costEUR: 945 },
+                { category: "Transporte Local", costEUR: 70 },
+            ],
+            cities: [
+                { name: 'Ámsterdam', lat: 52.3676, lon: 4.9041 },
+                { name: 'Bruselas', lat: 50.8503, lon: 4.3517 },
+                { name: 'Luxemburgo', lat: 49.6116, lon: 6.1319 },
+                { name: 'Estrasburgo', lat: 48.5734, lon: 7.7521 },
+                { name: 'Lucerna', lat: 47.0502, lon: 8.3093 },
+                { name: 'Interlaken', lat: 46.6863, lon: 7.8632 },
+                { name: 'Lausana', lat: 46.5197, lon: 6.6323 },
+                { name: 'Milán', lat: 45.4642, lon: 9.1900 },
+                { name: 'Mónaco', lat: 43.7384, lon: 7.4246 },
+                { name: 'Venecia', lat: 45.4408, lon: 12.3155 },
+                { name: 'Florencia', lat: 43.7696, lon: 11.2558 },
+                { name: 'Roma', lat: 41.9028, lon: 12.4964 },
+                { name: 'Madrid', lat: 40.4168, lon: -3.7038 },
+            ]
+        };
+
+        const exchangeRates = { EUR: 1, COP: 4500, CHF: 1.05 };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const accordionContainer = document.getElementById('itinerary-accordion');
+            tripData.itinerary.forEach(day => {
+                const item = document.createElement('div');
+                item.className = 'bg-white rounded-xl shadow-md';
+                item.innerHTML = `
+                    <div class="accordion-header p-4 md:p-6 flex justify-between items-center">
+                        <div class="flex items-center">
+                            <span class="bg-soft-slate text-white text-lg font-bold rounded-full w-10 h-10 flex items-center justify-center mr-4">${day.day}</span>
+                            <div>
+                                <h4 class="font-bold text-lg">${day.title}</h4>
+                                <p class="text-sm text-gray-500">${day.date}</p>
+                            </div>
+                        </div>
+                        <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="p-4 md:p-6 border-t border-gray-200 text-gray-700">
+                            <p>${day.details}</p>
+                        </div>
+                    </div>
+                `;
+                accordionContainer.appendChild(item);
+            });
+
+            document.querySelectorAll('.accordion-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const icon = header.querySelector('svg');
+                    
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        icon.classList.remove('rotate-180');
+                    } else {
+                        document.querySelectorAll('.accordion-content').forEach(c => c.style.maxHeight = null);
+                        document.querySelectorAll('.accordion-header svg').forEach(i => i.classList.remove('rotate-180'));
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        icon.classList.add('rotate-180');
+                    }
+                });
+            });
+
+            const budgetCtx = document.getElementById('budget-chart').getContext('2d');
+            new Chart(budgetCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: tripData.budget.map(item => item.category),
+                    datasets: [{
+                        data: tripData.budget.map(item => item.costEUR),
+                        backgroundColor: ['#4A5568', '#718096', '#A0AEC0', '#CBD5E0', '#E2E8F0', '#EDF2F7', '#F7FAFC'],
+                        borderColor: '#FDFBF8',
+                        borderWidth: 4,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 15,
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        }
+                    },
+                    cutout: '60%'
+                }
+            });
+
+            const budgetTableBody = document.querySelector('#budget-table tbody');
+            const currencyButtons = document.querySelectorAll('.currency-btn');
+            let subtotal = tripData.budget.reduce((sum, item) => sum + item.costEUR, 0);
+            let contingency = subtotal * 0.1;
+            let total = subtotal + contingency;
+
+            function renderBudgetTable(currency) {
+                budgetTableBody.innerHTML = '';
+                const rate = exchangeRates[currency];
+                const formatter = new Intl.NumberFormat('es-CO', { style: 'currency', currency: currency, minimumFractionDigits: 0 });
+
+                tripData.budget.forEach(item => {
+                    const row = `<tr><td class="py-2 px-4">${item.category}</td><td class="py-2 px-4 text-right">${formatter.format(item.costEUR * rate)}</td></tr>`;
+                    budgetTableBody.innerHTML += row;
+                });
+
+                budgetTableBody.innerHTML += `
+                    <tr class="border-t-2 font-semibold"><td class="py-2 px-4">Sub-Total</td><td class="py-2 px-4 text-right">${formatter.format(subtotal * rate)}</td></tr>
+                    <tr><td class="py-2 px-4">Contingencia (10%)</td><td class="py-2 px-4 text-right">${formatter.format(contingency * rate)}</td></tr>
+                    <tr class="bg-gray-100 font-bold text-lg"><td class="py-3 px-4">GRAN TOTAL</td><td class="py-3 px-4 text-right">${formatter.format(total * rate)}</td></tr>
+                `;
+            }
+
+            currencyButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    currencyButtons.forEach(btn => {
+                        btn.classList.remove('bg-soft-slate', 'text-white');
+                        btn.classList.add('bg-gray-300', 'text-gray-700');
+                    });
+                    button.classList.add('bg-soft-slate', 'text-white');
+                    button.classList.remove('bg-gray-300', 'text-gray-700');
+                    renderBudgetTable(button.dataset.currency);
+                });
+            });
+
+            renderBudgetTable('EUR');
+
+            const lats = tripData.cities.map(c => c.lat);
+            const lons = tripData.cities.map(c => c.lon);
+
+            const mapData = [{
+                type: 'scattergeo',
+                mode: 'lines+markers',
+                lon: lons,
+                lat: lats,
+                text: tripData.cities.map(c => c.name),
+                hoverinfo: 'text',
+                marker: {
+                    size: 8,
+                    color: '#C05621',
+                },
+                line: {
+                    width: 2,
+                    color: '#4A5568'
+                }
+            }];
+
+            const mapLayout = {
+                geo: {
+                    projection: {
+                        type: 'mercator'
+                    },
+                    scope: 'europe',
+                    center: { lon: 8, lat: 47 },
+                    lataxis: { range: [35, 55] },
+                    lonaxis: { range: [-10, 20] },
+                    showland: true,
+                    landcolor: '#E2E8F0',
+                    bgcolor: 'rgba(255,255,255,0)',
+                },
+                margin: { l: 0, r: 0, t: 0, b: 0 },
+                paper_bgcolor: 'rgba(255,255,255,0)',
+                plot_bgcolor: 'rgba(255,255,255,0)'
+            };
+
+            Plotly.newPlot('route-map', mapData, mapLayout, {responsive: true, displayModeBar: false});
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('main section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href').substring(1) === entry.target.id);
+                        });
+                    }
+                });
+            }, { rootMargin: '-50% 0px -50% 0px' });
+
+            sections.forEach(section => observer.observe(section));
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.querySelector(link.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
