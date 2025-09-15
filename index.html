@@ -3,7 +3,7 @@
  <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Itinerario Interactivo: Aventura Europea 2025</title>
+ <title>Itinerario Modificado: Aventura Europea 2025</title>
  <script src="https://cdn.tailwindcss.com"></script>
  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script>
@@ -149,7 +149,7 @@
  <main class="container mx-auto p-4 md:p-8">
  <section id="resumen" class="scroll-mt-20">
  <div class="text-center mb-12">
- <h2 class="text-3xl md:text-4xl font-bold mb-2">La Aventura Europea Definitiva</h2>
+ <h2 class="text-3xl md:text-4xl font-bold mb-2">Tu Aventura Europea a Medida</h2>
  <p class="text-lg text-gray-600">Un vistazo general a tu viaje optimizado del 27 de Sep al 13 de Oct de 2025.</p>
  </div>
  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
@@ -158,23 +158,23 @@
  <p class="text-gray-600 font-semibold">Días de Aventura</p>
  </div>
  <div class="bg-white p-6 rounded-xl shadow-md text-center border-t-4 border-teal-500">
- <h3 class="text-4xl font-bold text-teal-600">8</h3>
+ <h3 class="text-4xl font-bold text-teal-600">5</h3>
  <p class="text-gray-600 font-semibold">Países por Descubrir</p>
  </div>
  <div class="bg-white p-6 rounded-xl shadow-md text-center border-t-4 border-amber-500">
- <h3 class="text-4xl font-bold text-amber-600">12</h3>
+ <h3 class="text-4xl font-bold text-amber-600">7</h3>
  <p class="text-gray-600 font-semibold">Ciudades Principales</p>
  </div>
  </div>
  <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-12">
  <div class="bg-white p-6 rounded-xl shadow-lg border lg:col-span-3">
- <h3 class="text-2xl font-bold mb-4 text-center">Ruta del Viaje</h3>
+ <h3 class="text-2xl font-bold mb-4 text-center">Nueva Ruta del Viaje</h3>
  <p class="text-center text-gray-600 mb-4">Un recorrido visual de tu aventura. Pasa el cursor para ver detalles.</p>
  <div class="map-container" id="route-map"></div>
  </div>
  <div class="bg-white p-6 rounded-xl shadow-lg border lg:col-span-2">
  <h3 class="text-2xl font-bold mb-4 text-center">Desglose del Presupuesto (COP)</h3>
- <p class="text-center text-gray-600 mb-4">Costos totales para el grupo (3 adultos, 1 niño).</p>
+ <p class="text-center text-gray-600 mb-4">Costos totales para el grupo (3 adultos, 1 niño de 11).</p>
  <div class="chart-container">
  <canvas id="budget-chart"></canvas>
  </div>
@@ -185,9 +185,10 @@
  <i class="fas fa-plane-departure text-amber-600 mr-3"></i> Acción Requerida: ¡Reservas Prioritarias!
  </h3>
  <ul class="space-y-4">
- <li class="flex items-start"><span class="text-xl mr-3">✈️</span><div><strong class="font-semibold">Vuelos Internacionales:</strong> BOG↔AMS, MAD→BOG. <br> <a href="https://www.klm.com.co/en/search/search-summary" target="_blank" class="link">Reservar Ida (KLM)</a>. <span class="text-sm text-gray-500">(Precio encontrado para 3 pasajeros: COP 11,257,870.00)</span><br><a href="https://www.iberia.com/flights/?market=ES&Adult=1&PointOfSaleCountry=ES&UserCurrency=EUR&DisplayedPrice=585.97&DisplayedPriceCurrency=EUR&UserLanguage=en&TripType=OneWay&Slice1=1&Cabin1=Economy&Carrier1=IB&DepartureDate1=2025-10-13&Origin1=MAD&Destination1=BOG&FlightNumber1=153&FareCode1=VYL0NOB6&BookingCode1=V&utm_campaign=NL.always_on&utm_medium=metasearch&utm_source=GFS&ReferralId=GoogleFlightSearch&etf-publisher=GFS-core&etf-prdref=flight&etf-name=GFS-core-NL.always_on&gclid=ADowPOJsI4G1k_oJN1wHnBelV7_sAyPybJo_YKeMGYJ8vGWmmKqb-_973Z6j3pC3_lxgC5eGWtJaxgRyrSYMtaLnCT5AvtKcDOFz51KD9Za4_-wZbUE&gclsrc=gf#!/availability" target="_blank" class="link">Reservar Vuelta (Iberia)</a>. <span class="text-sm text-gray-500">(Precio encontrado: COP 7,767,000)</span></div></li>
- <li class="flex items-start"><span class="text-xl mr-3">✈️</span><div><strong class="font-semibold">Vuelo Roma → Madrid:</strong> Conexión clave para el regreso a casa. <br> <a href="https://www.wizzair.com/en-gb/booking/select-flight/FCO/MAD/2025-10-12/null/2/1/0?ref=gfs&gclid=ADowPOKMEq2NG_1Wg_e9TVJ_sYWOkM46u46KCITLwIpfnRugYCXCqOaSKpELJRI8Pi6BftQYwlT1EwRW3Gv1PCZxjwPSiL2LQGrKeoyMAj4VmwG3X9Eb&gclsrc=gf" target="_blank" class="link">Reservar Vuelo (Wizz Air)</a>. <span class="text-sm text-gray-500">(Precio encontrado: COP 2,101,500)</span></div></li>
- <li class="flex items-start"><span class="text-xl mr-3">🚄</span><div><strong class="font-semibold">Eurostar (Ámsterdam → Bruselas)</strong></div></li>
+ <li class="flex items-start"><span class="text-xl mr-3">✈️</span><div><strong class="font-semibold">Vuelos Internacionales (BOG ↔ AMS):</strong> Reserva tu ida y vuelta con KLM.<br><a href="https://www.klm.com.co/es/search/flight-selection?application=booking_flow&search_id=457588725&number_of_passengers=3_1_0&source=Search_results" target="_blank" class="link">Reservar Vuelos (KLM)</a>. <span class="text-sm text-gray-500">(Presupuesto Aprox: COP 15,000,000 para el grupo)</span></div></li>
+ <li class="flex items-start"><span class="text-xl mr-3">✈️</span><div><strong class="font-semibold">Vuelo Ámsterdam → Niza (Sep 30):</strong> Conexión a la Costa Azul.<br><a href="https://www.google.com/flights#flt=AMS.NCE.2025-09-30;c:EUR;e:1;a:KL;s:0;sd:1;t:f;tt:o;p:190.2.EUR.190.2.EUR" target="_blank" class="link">Buscar Vuelo (KLM/EasyJet)</a>.</div></li>
+ <li class="flex items-start"><span class="text-xl mr-3">✈️</span><div><strong class="font-semibold">Vuelo Roma → Ámsterdam (Oct 11):</strong> Vuelo de regreso al punto de partida.<br><a href="https://www.google.com/flights#flt=FCO.AMS.2025-10-11;c:EUR;e:1;s:0;a:KL;sd:1;t:f;tt:o" target="_blank" class="link">Buscar Vuelo (KLM/EasyJet)</a>.</div></li>
+ <li class="flex items-start"><span class="text-xl mr-3">🚄</span><div><strong class="font-semibold">Tren Panorámico Bernina Express:</strong> Reserva los asientos para el tramo Tirano - St. Moritz.<br><a href="https://tickets.rhb.ch/en/pages/bernina-express" target="_blank" class="link">Reservar Bernina Express</a>.</div></li>
  </ul>
  </div>
  </section>
@@ -197,7 +198,6 @@
  <p class="text-lg text-gray-600">Un plan profesional para tu aventura día por día.</p>
  </div>
  <div class="timeline" id="timeline-container">
- <!-- Itinerary items will be injected here by JS -->
  </div>
  </section>
  <section id="presupuesto" class="scroll-mt-20 mt-16">
@@ -221,7 +221,7 @@
  <tbody>
  </tbody>
  </table>
- <p class="text-sm text-gray-500 mt-4 text-center">*Nota: El presupuesto es un total estimado para el grupo. El costo del Swiss Travel Pass es para 3 adultos (el niño viaja gratis con la Swiss Family Card).</p>
+ <p class="text-sm text-gray-500 mt-4 text-center">*Nota: El presupuesto es un total estimado para el grupo. Los precios de los hoteles varían según la demanda.</p>
  </div>
  </section>
  </main>
@@ -231,58 +231,51 @@
  <script>
  const tripData = {
  itinerary: [
- { day: 1, date: "Vie, 27 Sep", title: "Salida de Bogotá", icon: "fa-plane-departure", details: "Vuelo nocturno a Ámsterdam.<br><strong>Vuelo:</strong> KLM KL742 (Sin escalas).<br><strong>Salida BOG:</strong> 21:55." },
- { day: 2, date: "Sáb, 28 Sep", title: "Llegada a Ámsterdam", icon: "fa-city", details: "<strong>16:15:</strong> Llegada a Schiphol (AMS).<br><strong>18:15:</strong> Check-in: <strong>citizenM Amstel</strong>.<br><strong>Noche:</strong> Paseo por los canales del centro." },
- { day: 3, date: "Dom, 29 Sep", title: "Ámsterdam → Bruselas", icon: "fa-train-subway", details: "<strong>Mañana:</strong> Visita al <strong>Rijksmuseum</strong> (€25).<br><strong>15:19:</strong> Tren <strong>Eurostar</strong> a Bruselas.<br><strong>18:00:</strong> Check-in: <strong>Motel One Brussels</strong>." },
- { day: 4, date: "Lun, 30 Sep", title: "Excursión a Brujas", icon: "fa-landmark", details: "Día completo en la \"Venecia del Norte\".<br><strong>Actividades:</strong> Subir al Campanario (Belfry), tour en barco por los canales, probar \"moules-frites\"." },
- { day: 5, date: "Mar, 1 Oct", title: "Bruselas → Luxemburgo", icon: "fa-train-subway", details: "<strong>12:33:</strong> Tren a Luxemburgo.<br>Check-in: <strong>Mama Shelter</strong>.<br>Paseo por el <strong>Chemin de la Corniche</strong>. ¡Transporte público GRATIS!" },
- { day: 6, date: "Mié, 2 Oct", title: "Luxemburgo → Estrasburgo", icon: "fa-train-subway", details: "<strong>11:10:</strong> Tren a Estrasburgo, Francia.<br>Check-in: <strong>Hotel Hannong</strong>.<br>Explorar <strong>La Petite France</strong> y probar Tarte Flambée." },
- { day: 7, date: "Jue, 3 Oct", title: "Estrasburgo → Lucerna 🇨🇭", icon: "fa-mountain-sun", details: "<strong class='text-blue-600'>¡Activar el Swiss Travel Pass!</strong><br>Viaje en tren a Lucerna vía Basilea.<br>Check-in: <strong>SYH Lucerne</strong>.<br>Explorar el Puente de la Capilla." },
- { day: 8, date: "Vie, 4 Oct", title: "Monte Rigi", icon: "fa-cable-car", details: "<strong class='text-blue-600'>Swiss Travel Pass - Día 2</strong><br>Excursión \"Reina de las Montañas\".<br>Ruta: Barco → Tren cremallera → Teleférico. <strong>100% Incluido</strong> con STP." },
- { day: 9, date: "Sáb, 5 Oct", title: "Lucerna → Interlaken", icon: "fa-train-tram", details: "<strong class='text-blue-600'>Swiss Travel Pass - Día 3</strong><br>Tren panorámico <strong>Luzern-Interlaken Express</strong>.<br>Visitar <strong>Lauterbrunnen</strong> (Valle de 72 Cascadas)." },
- { day: 10, date: "Dom, 6 Oct", title: "Interlaken → Lausana", icon: "fa-train-tram", details: "<strong class='text-blue-600'>Swiss Travel Pass - Día 4</strong><br>Viaje en tren a Lausana.<br>Visitar el <strong>Museo Olímpico</strong> (50% desc. con STP)." },
- { day: 11, date: "Lun, 7 Oct", title: "Chillon → Milán 🇮🇹", icon: "fa-chess-rook", details: "Barco al <strong>Castillo de Chillon</strong> (cubierto por STP).<br>Explorar el castillo y pasear a Montreux.<br><strong>Tarde:</strong> Tren a Milán.<br>Check-in: <strong>NH Collection President</strong>." },
- { day: 12, date: "Mar, 8 Oct", title: "Milán o Mónaco 🇲🇨", icon: "fa-diamond", details: "<strong>Opción A:</strong> Explorar Milán (Duomo, La Última Cena).<br><strong>Opción B:</strong> Excursión de día completo a Mónaco (Casino, Palacio)." },
- { day: 13, date: "Mié, 9 Oct", title: "Milán → Venecia", icon: "fa-water", details: "<strong>11:45:</strong> Tren Frecciarossa a Venecia.<br>Check-in: <strong>Hotel Antiche Figure</strong>.<br>Noche de \"bacari\" y \"cicchetti\"." },
- { day: 14, date: "Jue, 10 Oct", title: "Venecia → Florencia", icon: "fa-palette", details: "<strong>Mañana:</strong> Visitar el <strong>Palacio Ducal</strong> (€25).<br><strong>14:20:</strong> Tren Frecciarossa a Florencia.<br>Atardecer en <strong>Piazzale Michelangelo</strong>." },
- { day: 15, date: "Vie, 11 Oct", title: "Florencia → Roma", icon: "fa-landmark-dome", details: "<strong>15:13:</strong> Tren Frecciarossa a Roma.<br>Paseo a la <strong>Fontana di Trevi</strong> y el <strong>Panteón</strong>." },
- { day: 16, date: "Sáb, 12 Oct", title: "Roma → Madrid 🇪🇸", icon: "fa-plane", details: "<strong>08:30:</strong> <strong>Coliseo</strong> y Foro Romano (€18).<br><strong>14:00:</strong> <strong>Museos Vaticanos</strong> (€25).<br><strong>19:55:</strong> Vuelo a Madrid." },
- { day: 17, date: "Dom, 13 Oct", title: "Madrid y Despedida", icon: "fa-plane-arrival", details: "<strong>Mañana:</strong> Visita al <strong>Museo del Prado</strong> (€15).<br>Almuerzo de tapas.<br><strong>17:35:</strong> Vuelo de regreso a Bogotá." }
+ { day: 1, date: "Vie, 27 Sep", title: "✈️ Salida de Bogotá", icon: "fa-plane-departure", details: "Vuelo nocturno desde Bogotá (BOG) a Ámsterdam (AMS).<br><strong>Vuelo Sugerido:</strong> KLM." },
+ { day: 2, date: "Sáb, 28 Sep", title: "🚆 Llegada y Traslado a Utrecht", icon: "fa-train", details: "Llegada al Aeropuerto Schiphol (AMS). Tomar tren directo a Utrecht (30 min).<br><strong>Plan de equipaje:</strong> Considerar dejar la maleta grande en un hotel del aeropuerto donde se hospedarán al final del viaje (ej. Sheraton Schiphol) para viajar más ligeros.<br><strong>Hotel:</strong> <a href='https://www.marriott.com/en-us/hotels/amsox-moxy-utrecht/overview/' class='link' target='_blank'>Moxy Utrecht</a>. Check-in y paseo por el centro histórico y canales de Utrecht." },
+ { day: 3, date: "Dom, 29 Sep", title: "🌬️ Molinos y Canales", icon: "fa-wind-turbine", details: "Excursión de día completo desde Utrecht.<br><strong>Transporte:</strong> Usar el <a href='https://www.ns.nl/producten/en/meest-gekocht/p/groepsticket-daluren' class='link' target='_blank'>NS Group Ticket</a> (para los 3 adultos) y un <a href='https://www.ns.nl/producten/en/losse-kaartjes/p/railrunner' class='link' target='_blank'>Railrunner ticket</a> (€2.50 para el niño).<br><strong>Mañana:</strong> Visitar <strong>Zaanse Schans</strong> (molinos de viento).<br><strong>Tarde:</strong> Explorar <strong>Ámsterdam</strong> (Plaza Dam, Mercado de las Flores)." },
+ { day: 4, date: "Lun, 30 Sep", title: "✈️ Vuelo a la Costa Azul", icon: "fa-plane", details: "Mañana libre en Utrecht. Regreso al aeropuerto de Schiphol (AMS).<br><strong>Tarde:</strong> Vuelo a <strong>Niza (NCE)</strong>.<br>Traslado al hotel y check-in.<br><strong>Hotel:</strong> <a href='https://www.marriott.com/en-us/hotels/nceac-ac-hotel-nice/overview/' class='link' target='_blank'>AC Hotel by Marriott Nice</a>. Caminata nocturna por el <strong>Paseo de los Ingleses</strong>." },
+ { day: 5, date: "Mar, 1 Oct", title: "💎 Glamour en Mónaco", icon: "fa-gem", details: "Excursión de un día a Mónaco.<br><strong>Transporte:</strong> Tren regional desde Nice-Ville (aprox. 25 min).<br><strong>Actividades:</strong> Ver el cambio de guardia en el <strong>Palacio del Príncipe</strong>, visitar el <strong>Casino de Montecarlo</strong> y el Jardín Exótico." },
+ { day: 6, date: "Mié, 2 Oct", title: "🚆 Niza → Milán", icon: "fa-train-subway", details: "Mañana para disfrutar de Niza. Subir a la <strong>Colina del Castillo</strong> para vistas panorámicas.<br><strong>Mediodía:</strong> Tren desde Niza a Milán (aprox. 5 horas).<br><strong>Hotel:</strong> <a href='https://www.marriott.com/en-us/hotels/millc-sheraton-diana-majestic-milan/overview/' class='link' target='_blank'>Sheraton Diana Majestic, Milan</a>. Noche de aperitivo milanés." },
+ { day: 7, date: "Jue, 3 Oct", title: "🏔️ Alpes Suizos: Bernina Express", icon: "fa-mountain-sun", details: "<strong class='text-blue-600'>¡Excursión épica de un día!</strong><br><strong>06:20:</strong> Tren de Milán a <strong>Tirano</strong>.<br><strong>10:00:</strong> Abordar el <strong>Tren Panorámico Bernina Express</strong> de Tirano a St. Moritz, un sitio del Patrimonio Mundial de la UNESCO. Vistas espectaculares de glaciares y lagos.<br><strong>Tarde:</strong> Explorar St. Moritz y tomar el tren de regreso a Milán." },
+ { day: 8, date: "Vie, 4 Oct", title: "🚆 Milán → Venecia", icon: "fa-water", details: "<strong>Mañana:</strong> Visitar el imponente <strong>Duomo de Milán</strong> y la Galería Vittorio Emanuele II.<br><strong>Tarde:</strong> Tren de alta velocidad (Frecciarossa) a Venecia (aprox. 2.5 horas).<br><strong>Hotel:</strong> <a href='https://www.marriott.com/en-us/hotels/vceac-ac-hotel-venezia/overview/' class='link' target='_blank'>AC Hotel Venezia</a>. Noche explorando las calles y canales." },
+ { day: 9, date: "Sáb, 5 Oct", title: "🎭 La Magia de Venecia", icon: "fa-gondola", details: "Día completo para explorar Venecia.<br><strong>Actividades:</strong> Visitar la <strong>Plaza de San Marcos</strong>, el <strong>Palacio Ducal</strong> y el <strong>Puente de Rialto</strong>. No se pierdan un paseo en góndola." },
+ { day: 10, date: "Dom, 6 Oct", title: "🚆 Venecia → Roma", icon: "fa-landmark-dome", details: "Mañana libre en Venecia para visitar las islas de Murano y Burano.<br><strong>Tarde:</strong> Tren de alta velocidad a Roma (aprox. 4 horas).<br><strong>Hotel:</strong> <a href='https://www.marriott.com/en-us/hotels/romfl-rome-marriott-grand-hotel-flora/overview/' class='link' target='_blank'>Rome Marriott Grand Hotel Flora</a>. Paseo nocturno a la <strong>Fontana di Trevi</strong>." },
+ { day: 11, date: "Lun, 7 Oct", title: "🏛️ La Roma Imperial", icon: "fa-building-columns", details: "Día dedicado a la Antigua Roma.<br><strong>Actividades:</strong> Explorar el <strong>Coliseo</strong>, el <strong>Foro Romano</strong> y el Monte Palatino. Es crucial reservar las entradas con mucha antelación." },
+ { day: 12, date: "Mar, 8 Oct", title: "🇻🇦 El Vaticano", icon: "fa-church", details: "Visita a la Ciudad del Vaticano.<br><strong>Actividades:</strong> Explorar la <strong>Plaza y Basílica de San Pedro</strong>. Visitar los <strong>Museos Vaticanos</strong> y la <strong>Capilla Sixtina</strong>. También se requiere reserva anticipada." },
+ { day: 13, date: "Mié, 9 Oct", title: "🎨 Corazón de Roma", icon: "fa-paint-brush", details: "Explorar los tesoros del centro de Roma.<br><strong>Actividades:</strong> Visitar el <strong>Panteón</strong>, pasear por <strong>Piazza Navona</strong>, y subir los <strong>Escalones Españoles</strong>. Tarde libre para compras o disfrutar de un gelato." },
+ { day: 14, date: "Jue, 10 Oct", title: "🍝 Día Libre en Roma", icon: "fa-utensils", details: "Último día completo en Roma. Pueden visitar el barrio de Trastevere para un almuerzo auténtico, explorar los jardines de Villa Borghese o visitar alguna otra atracción de interés." },
+ { day: 15, date: "Vie, 11 Oct", title: "✈️ Regreso a Ámsterdam", icon: "fa-plane-arrival", details: "<strong>Mañana:</strong> Vuelo desde Roma (FCO) a Ámsterdam (AMS).<br>Traslado al hotel del aeropuerto, recuperar el equipaje guardado.<br><strong>Hotel:</strong> <a href='https://www.marriott.com/en-us/hotels/amsas-sheraton-amsterdam-airport-hotel-and-conference-center/overview/' class='link' target='_blank'>Sheraton Amsterdam Airport Hotel</a>. Tarde de descanso." },
+ { day: 16, date: "Sáb, 12 Oct", title: "🧀 Último Día en Holanda", icon: "fa-cheese", details: "Día libre para últimas compras o una visita tranquila. Pueden tomar un tren corto al centro de Ámsterdam para visitar el Mercado de las Flores o dar un paseo final por los canales." },
+ { day: 17, date: "Dom, 13 Oct", title: "🏠 Vuelo de Vuelta a Casa", icon: "fa-house-user", details: "Disfrutar del desayuno en el hotel.<br>Dirigirse al terminal de salidas del Aeropuerto Schiphol para el vuelo de regreso a Bogotá con KLM." }
  ],
  budget: [
- { category: "Vuelos Internacionales", costEUR: 6000 },
- { category: "Vuelo Intra-Europeo", costEUR: 467 },
- { category: "Trenes y Pases", costEUR: 1935},
- { category: "Alojamiento", costEUR: 6480 },
- { category: "Atracciones y Museos", costEUR: 448 },
- { category: "Comida y Bebida", costEUR: 3591 },
- { category: "Transporte Local", costEUR: 280 },
+ { category: "Vuelos Internacionales (BOG-AMS)", costEUR: 3335 },
+ { category: "Vuelos Intra-Europeos (2)", costEUR: 1000 },
+ { category: "Alojamiento (15 noches)", costEUR: 6000 },
+ { category: "Trenes y Pases (Incl. Bernina)", costEUR: 1800 },
+ { category: "Comida y Bebida", costEUR: 3825 },
+ { category: "Atracciones y Tours", costEUR: 800 },
+ { category: "Transporte Local y Varios", costEUR: 500 },
  ],
  locations: {
  cities: [
+ { name: 'Utrecht', lat: 52.0907, lon: 5.1214 },
  { name: 'Ámsterdam', lat: 52.3676, lon: 4.9041 },
- { name: 'Bruselas', lat: 50.8503, lon: 4.3517 },
- { name: 'Luxemburgo', lat: 49.6116, lon: 6.1319 },
- { name: 'Estrasburgo', lat: 48.5734, lon: 7.7521 },
- { name: 'Lucerna', lat: 47.0502, lon: 8.3093 },
- { name: 'Interlaken', lat: 46.6863, lon: 7.8632 },
- { name: 'Lausana', lat: 46.5197, lon: 6.6323 },
- { name: 'Milán', lat: 45.4642, lon: 9.1900 },
+ { name: 'Niza', lat: 43.7102, lon: 7.2620 },
  { name: 'Mónaco', lat: 43.7384, lon: 7.4246 },
+ { name: 'Milán', lat: 45.4642, lon: 9.1900 },
+ { name: 'St. Moritz (Bernina)', lat: 46.4908, lon: 9.8351},
  { name: 'Venecia', lat: 45.4408, lon: 12.3155 },
- { name: 'Florencia', lat: 43.7696, lon: 11.2558 },
  { name: 'Roma', lat: 41.9028, lon: 12.4964 },
- { name: 'Madrid', lat: 40.4168, lon: -3.7038 },
+ { name: 'Ámsterdam', lat: 52.3676, lon: 4.9041 }
  ],
  countries: [
  { name: 'PAÍSES BAJOS', lat: 52.2, lon: 5.4 },
- { name: 'BÉLGICA', lat: 50.6, lon: 4.7 },
- { name: 'LUXEMBURGO', lat: 49.8, lon: 6.1 },
- { name: 'FRANCIA', lat: 48.8, lon: 2.3 },
- { name: 'SUIZA', lat: 46.8, lon: 8.2 },
- { name: 'ITALIA', lat: 42.8, lon: 12.8 },
+ { name: 'FRANCIA', lat: 46.2, lon: 2.2 },
  { name: 'MÓNACO', lat: 43.7, lon: 7.5 },
- { name: 'ESPAÑA', lat: 40.4, lon: -3.7 },
+ { name: 'SUIZA', lat: 46.8, lon: 8.2 },
+ { name: 'ITALIA', lat: 42.8, lon: 12.8 }
  ]
  }
  };
@@ -297,14 +290,6 @@
  style: 'currency',
  currency: 'COP',
  minimumFractionDigits: 0
- });
- 
- // Convert itinerary prices to COP
- tripData.itinerary.forEach(item => {
- item.details = item.details.replace(/€(\d+)/g, (match, amount) => {
- const copAmount = parseInt(amount) * exchangeRates.COP;
- return copFormatter.format(copAmount);
- });
  });
  
  // Itinerary Timeline Generation
@@ -370,7 +355,7 @@
  function renderBudgetTable(currency) {
  budgetTableBody.innerHTML = '';
  const rate = exchangeRates[currency];
- const formatter = new Intl.NumberFormat('es-CO', {
+ const formatter = new Intl.NumberFormat(currency === 'COP' ? 'es-CO' : 'de-DE', {
  style: 'currency',
  currency: currency,
  minimumFractionDigits: 0
@@ -440,8 +425,8 @@
  },
  scope: 'europe',
  center: { lon: 8, lat: 48 },
- lataxis: { range: [38, 54] },
- lonaxis: { range: [-5, 15] },
+ lataxis: { range: [40, 54] },
+ lonaxis: { range: [2, 16] },
  showland: true,
  landcolor: '#E9ECEF',
  bgcolor: 'rgba(255,255,255,0)',
